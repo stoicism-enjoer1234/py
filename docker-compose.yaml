@@ -10,6 +10,12 @@ services:
       - "5000:5000"
     network_mode: "host"
   
+  server:
+    image: flask-server
+    depends_on:
+      - client
+    network_mode: "host"
+
   rabbitmq:
     image: rabbitmq:3-management
     ports:
