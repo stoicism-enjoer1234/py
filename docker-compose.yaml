@@ -31,8 +31,8 @@ services:
     environment:
       #- MYQL_ROOT_PASSWORD: 123321
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: "test_db"
-      MYSQL_USER: "root"
+      clearMYSQL_DATABASE: "test_db"
+      #MYSQL_USER: "root"
     network_mode: "host"
     #ports:
     #  - "80:80"
