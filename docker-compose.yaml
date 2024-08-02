@@ -13,7 +13,7 @@ services:
   server:
     image: flask-server
     depends_on:
-      - client
+      - db
     network_mode: "host"
 
   rabbitmq:
@@ -22,3 +22,15 @@ services:
       - "5672:5672"
       - "15672:15672"
     network_mode: host
+  db:
+    image: mysql:latest
+    environment:
+      #- MYQL_ROOT_PASSWORD: 123321
+      - MYSQL_DATABASE: test_db
+      - MYSQL_USER: root
+
+    volumes:
+      - mysql_data:/var/lib/mysql 
+
+volumes:
+  mysql_data:
