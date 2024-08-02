@@ -26,8 +26,8 @@ services:
     image: mysql:latest
     environment:
       #- MYQL_ROOT_PASSWORD: 123321
-      - MYSQL_DATABASE: "test_db"
-      - MYSQL_USER: "root"
+      MYSQL_DATABASE: "test_db"
+      MYSQL_USER: "root"
 
     volumes:
       - mysql_data:/var/lib/mysql 
