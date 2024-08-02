@@ -6,25 +6,25 @@ services:
     image: flask-client
     depends_on: 
       - rabbitmq
-    ports: 
-      - "5000:5000"
-    #network_mode: "host"
-      - "80:80"  
+    #ports: 
+    #  - "5000:5000"
+    network_mode: "host"
+  
   server:
     image: flask-server
     depends_on:
       - db
     #network_mode: "host"
-    ports:
-      - "80:80"
+    # ports:
+    # - "80:80"
   
   rabbitmq:
     image: rabbitmq:3-management
-    ports:
-      - "5672:5672"
-      - "15672:15672"
-      - "80:80"
-    #network_mode: host
+    #ports:
+    #  - "5672:5672"
+    #  - "15672:15672"
+    #  - "80:80"
+    network_mode: host
   
   db:
     image: mysql:latest
@@ -33,9 +33,10 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_DATABASE: "test_db"
       MYSQL_USER: "root"
-    #network_mode: "host"
-    ports:
-      - "80:80"
+    network_mode: "host"
+    #ports:
+    #  - "80:80"
+  
     volumes:
       - mysql_data:/var/lib/mysql 
 
