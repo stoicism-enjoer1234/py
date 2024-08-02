@@ -1,11 +1,15 @@
 FROM ubuntu:22.04
 
-WORKDIR /app
+WORKDIR /flask-app
 
-COPY ./app.py /app
+COPY ./flask-app.py /flask-app
 
 RUN apt -y update
 
 RUN apt install -y python3-flask
 
-ENTRYPOINT ["python3", "app.py"] 
+RUN apt install -y python3-pika
+
+RUN apt install -y python3-jsonschema
+
+ENTRYPOINT ["python3", "flask-app.py"] 
