@@ -12,14 +12,14 @@ services:
   rabbitmq:
     image: rabbitmq:3-management
     depends_on: 
-      - db
+      - mysql
     #ports:
     #  - "5672:5672"
     #  - "15672:15672"
     #  - "80:80"
     network_mode: host
   
-  db:
+  mysql:
     image: mysql:latest
     environment:
       #- MYQL_ROOT_PASSWORD: 123321
@@ -36,7 +36,7 @@ services:
   server:
     image: flask-server
     depends_on:
-      - db
+      - mysql
     #network_mode: "host"
     # ports:
     # - "80:80"
