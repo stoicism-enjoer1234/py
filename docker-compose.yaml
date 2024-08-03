@@ -37,6 +37,8 @@ services:
     image: flask-server
     depends_on:
       - mysql
+    links:
+      - "mysql:test_db"
     #network_mode: "host"
     # ports:
     # - "80:80"
