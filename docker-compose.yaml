@@ -34,7 +34,7 @@ services:
       - mysql_data:/var/lib/mysql
   
   server:
-    image: flask-server
+    image: flask-test-server
     depends_on:
       - mysql
     #network_mode: "host"
