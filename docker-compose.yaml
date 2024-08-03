@@ -17,7 +17,7 @@ services:
     #  - "5672:5672"
     #  - "15672:15672"
     #  - "80:80"
-    network_mode: host
+    network_mode: "host"
   
   mysql:
     image: mysql:latest
@@ -27,8 +27,8 @@ services:
       clearMYSQL_DATABASE: "test_db"
       #MYSQL_USER: "root"
     network_mode: "host"
-    ports:
-      - "80:80/tcp"
+    #ports:
+    #  - "80:80/tcp"
   
     volumes:
       - mysql_data:/var/lib/mysql
@@ -37,10 +37,8 @@ services:
     image: flask-server
     depends_on:
       - mysql
-    links:
-      - "mysql:test_db"
-    network_mode: "host"
-    # ports:
+    #network_mode: "host"
+    #ports:
     # - "80:80"
 
 volumes:
