@@ -4,7 +4,7 @@ import pika, sys, os, MySQLdb, logging
 def main():
     logging.basicConfig(level=logging.INFO, filename="app_log.log", filemode="a",
                     format="%(asctime)s %(levelname)s %(message)s")
-    db=MySQLdb.connect("127.0.0.1", "root", "", "test_db")
+    db=MySQLdb.connect("mysql", "root", "", "test_db") # 1 was "localhost"
     logging.info("You successfully connected to MySQL database!")
 
     connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
