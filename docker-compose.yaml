@@ -1,43 +1,29 @@
 version: "3.5"
 
 services:
-  client:
-    image: flask-client
-    depends_on: 
-      - rabbitmq
-    #ports: 
-    #  - "5000:5000"
-    network_mode: "host"
-    
-  rabbitmq:
-    image: rabbitmq:3-management
-    #ports:
-    #  - "5672:5672"
-    #  - "15672:15672"
-    #  - "80:80"
-    network_mode: "host"
   
   mysql:
     image: mysql:latest
     environment:
-      #- MYQL_ROOT_PASSWORD: 123321
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      clearMYSQL_DATABASE: "test_db"
-      #MYSQL_USER: "root"
+      MYSQL_DATABASE: "test_db"
     network_mode: "host"
-    #ports:
-    #  - "80:80/tcp"
-  
     volumes:
-      - mysql_data:/var/lib/mysql
-  
+      - ./data/mysqldata:/var/lib/docker/volumes/mysql_data/_data
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    network_mode: "host"
+
+  client:
+    image: flask-client
+    depends_on: 
+      - rabbitmq
+    network_mode: "host"
+    
   server:
     image: flask-server
     depends_on:
-      - mysql
-    #network_mode: "host"
-    #ports:
-    # - "80:80"
-
-volumes:
-  mysql_data:
+      - rabbitmq
+    network_mode: "host"
+  

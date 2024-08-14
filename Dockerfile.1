@@ -1,13 +1,13 @@
 FROM ubuntu:22.04
 
-WORKDIR /flask-app-server
+WORKDIR /flask-app
 
-COPY ./server.py /flask-app-server
+COPY ./server-v1.2.py /flask-app
 
 RUN apt -y update
 
 RUN apt install -y python3-pika
 
-RUN apt install -y python3-mysqldb
+RUN apt install -y python3-mysql.connector
 
-ENTRYPOINT ["python3", "server.py"] 
+ENTRYPOINT ["python3", "server-v1.2.py"] 
