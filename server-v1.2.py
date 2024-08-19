@@ -6,7 +6,7 @@ def main():
 
     time.sleep(5)
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
     
     channel = connection.channel()
 

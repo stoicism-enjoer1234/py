@@ -1,6 +1,8 @@
 import pika, logging
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, make_response
 from jsonschema import validate
+from multiprocessing import Value
+
 
 app = Flask(__name__)
 
@@ -15,6 +17,7 @@ schema = {
         }
     }
 
+counter = Value('i', 0)
 
 @app.route('/')
 def hallo_everynyan():
@@ -24,6 +27,14 @@ def hallo_everynyan():
 logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="a",
                     format="%(asctime)s %(levelname)s %(message)s")
 
+@app.route('/metrics', methods=['GET'])
+def get_metrics():
+    with counter.get_lock():
+        counter.value += 1
+        out = counter.value
+
+    return 'http_requests_total='+str(out)
+    #return jsonify(http_requests_total=out)
 
 @app.route('/', methods=["POST"])
 def index():
@@ -52,4 +63,4 @@ def index():
 
 
 if __name__ == '__main__':
-       app.run()
+       app.run(debug=True, host='0.0.0.0')
