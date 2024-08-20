@@ -1,0 +1,65 @@
+version: "3.5"
+
+volumes:
+  app_data: {}
+
+services:
+  
+  mysql:
+    image: mysql:latest
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "test_db"
+    network_mode: "host"
+    volumes:
+      - ./data/mysqldata:/var/lib/docker/volumes/mysql_data/_data
+    
+  rabbitmq:
+    image: rabbitmq:3-management
+    network_mode: "host"
+
+  client:
+    image: flask-client
+    depends_on: 
+      - rabbitmq
+    network_mode: "host"
+    
+  server:
+    image: flask-server
+    depends_on:
+      - rabbitmq
+    network_mode: "host"
+
+  grafana:
+    image: grafana/grafana
+    network_mode: "host"
+    environment:
+      - "GF_DEFAULT_APP_MODE=development"
+      - "GF_LOG_LEVEL=debug"
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin # grants admin role to anonymous access
+      - GF_AUTH_ANONYMOUS_ENABLED=true # removes login 1/2
+      - GF_AUTH_BASIC_ENABLED=false # removes login 2/2
+      - GF_FEATURE_TOGGLES_ENABLE=alertingSimplifiedRouting
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
+
+  # prometheus:
+  #   image: prom/prometheus
+  #   volumes:
+  #     - /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+  #   #entrypoint: /bin/bash
+  #   command:
+  #     - "--config.file=/etc/prometheus/prometheus.yml"
+  #     - "--storage.tsdb.path=/prometheus"
+  #   network_mode: "host"
+  
+  # loki:
+  #   image: grafana/loki
+  #   command: -config.file=/etc/loki/local-config.yaml
+  #   network_mode: "host"
+
+  # promtail:
+  #   image: grafana/promtail
+  #   volumes:
+  #     - app_data:/var/log
+  #   network_mode: "host"

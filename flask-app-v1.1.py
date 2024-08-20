@@ -33,7 +33,7 @@ def get_metrics():
         counter.value += 1
         out = counter.value
 
-    return 'http_requests_total='+str(out)
+    return 'http_requests_total '+str(out)
     #return jsonify(http_requests_total=out)
 
 @app.route('/', methods=["POST"])
@@ -63,4 +63,4 @@ def index():
 
 
 if __name__ == '__main__':
-       app.run(debug=True, host='0.0.0.0')
+       app.run(debug=True)
