@@ -1,7 +1,7 @@
 import pika, sys, os, logging, mysql.connector, time
 
 def main():
-    logging.basicConfig(level=logging.INFO, filename="app_log.log", filemode="a",
+    logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="a",
                     format="%(asctime)s %(levelname)s %(message)s")
 
     time.sleep(5)

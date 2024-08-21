@@ -43,23 +43,13 @@ services:
     volumes:
       - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources
 
-  # prometheus:
-  #   image: prom/prometheus
-  #   volumes:
-  #     - /etc/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-  #   #entrypoint: /bin/bash
-  #   command:
-  #     - "--config.file=/etc/prometheus/prometheus.yml"
-  #     - "--storage.tsdb.path=/prometheus"
-  #   network_mode: "host"
-  
-  # loki:
-  #   image: grafana/loki
-  #   command: -config.file=/etc/loki/local-config.yaml
-  #   network_mode: "host"
+  loki:
+    image: grafana/loki
+    command: -config.file=/etc/loki/local-config.yaml
+    network_mode: "host"
 
-  # promtail:
-  #   image: grafana/promtail
-  #   volumes:
-  #     - app_data:/var/log
-  #   network_mode: "host"
+  promtail:
+    image: grafana/promtail
+    volumes:
+      - /var/log/*:/var/log/
+    network_mode: "host"

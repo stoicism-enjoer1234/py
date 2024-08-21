@@ -32,7 +32,6 @@ def get_metrics():
     with counter.get_lock():
         counter.value += 1
         out = counter.value
-
     return 'http_requests_total '+str(out)
     #return jsonify(http_requests_total=out)
 
