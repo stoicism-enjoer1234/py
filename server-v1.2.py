@@ -6,7 +6,7 @@ def main():
 
     time.sleep(5)
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='rabbitmq'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='127.0.0.1'))
     
     channel = connection.channel()
 
@@ -15,7 +15,7 @@ def main():
     def callback(ch, method, properties, body):
         try:
             
-            global firstName, lastName
+            #global firstName, lastName
 
             print(f" [x] Received {body}")
             

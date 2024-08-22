@@ -10,4 +10,4 @@ RUN apt install -y python3-pika
 
 RUN apt install -y python3-mysql.connector
 
-RUN /bin/bash
+ENTRYPOINT ["python3", "server-v1.2.py"]

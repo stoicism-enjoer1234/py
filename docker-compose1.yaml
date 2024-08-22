@@ -1,7 +1,7 @@
 version: "3.5"
 
-volumes:
-  app_data: {}
+# volumes:
+#   app_data: {}
 
 services:
   
@@ -51,5 +51,5 @@ services:
   promtail:
     image: grafana/promtail
     volumes:
-      - /var/log/*:/var/log/
+      - /var/lib/docker/containers/*:/var/lib/docker/containers/
     network_mode: "host"
