@@ -28,13 +28,22 @@ logging.basicConfig(level=logging.INFO, filename="py_log.log", filemode="a",
                     format="%(asctime)s %(levelname)s %(message)s")
 
 @app.route('/metrics', methods=['GET'])
-def get_metrics():
+def requests_counter():
     with counter.get_lock():
         counter.value += 1
         out = counter.value
-        print('there are ', str(out), "requests now", flush=True)
-    return 'http_requests_total '+str(out)
-    #return jsonify(http_requests_total=out)
+        print(f'There are {out} requests now!', flush=True)
+    return jsonify(count=out)
+
+
+# @app.route('/metrics', methods=['GET'])
+# def get_metrics():
+#     with counter.get_lock():
+#         counter.value += 1
+#         out = counter.value
+#         print('there are ', str(out), "requests now", flush=True)
+#     return "there are ", str(out), " requests now"
+ 
 
 @app.route('/', methods=["POST"])
 def index():
