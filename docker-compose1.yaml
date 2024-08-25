@@ -50,6 +50,7 @@ services:
 
   promtail:
     image: grafana/promtail
+    command: -config.file=/etc/promtail/promtail.yml
     volumes:
-      - /var/lib/docker/containers/f1733*/f1733*.log:/var/lib/docker/containers/f1733*/
+      - ./data/promatil-data:/var/lib/docker/volumes/promtail-data/_data
     network_mode: "host"

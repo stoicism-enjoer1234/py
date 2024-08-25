@@ -41,7 +41,7 @@ def requests_counter():
 #     with counter.get_lock():
 #         counter.value += 1
 #         out = counter.value
-#         print('there are ', str(out), "requests now", flush=True)
+#        4 print('there are ', str(out), "requests now", flush=True)
 #     return "there are ", str(out), " requests now"
  
 
