@@ -1,5 +1,5 @@
 import pika, logging
-from flask import Flask, render_template, request, jsonify, make_response
+from flask import Flask, render_template, request, jsonify, Response
 from jsonschema import validate
 from multiprocessing import Value
 
@@ -43,7 +43,6 @@ def requests_counter():
 #         out = counter.value
 #        4 print('there are ', str(out), "requests now", flush=True)
 #     return "there are ", str(out), " requests now"
- 
 
 @app.route('/', methods=["POST"])
 def index():
@@ -53,7 +52,7 @@ def index():
     if request.method == "POST":
         try:
             connection = pika.BlockingConnection(
-                 pika.ConnectionParameters(host='localhost'))
+                 pika.ConnectionParameters(host='127.0.0.1'))
             channel = connection.channel()
             channel.queue_declare(queue='db_insert')
             firstname = request.json["firstname"]
@@ -63,12 +62,39 @@ def index():
             print('Your data is: ', data_for_db)
             channel.basic_publish(exchange='', routing_key='db_insert', body=data_for_db)
             print(" [x] Sent 'Some data for your db!'", data_for_db)
-            connection.close()
             logging.info("Data has been inserted successfully: ")
-            return 'You successfully inserted your data! \n'
+            connection.close()
+            return jsonify(Your_data=data_for_db), 200
         except Exception as ex:
-            return ex
-    return render_template('index.html')
+            ex=str(ex)
+            print(ex, flush=True)
+            return jsonify(Error=ex)
+    return Response("{'Your data is - ': f'{data_for_db}'}", status=200, mimetype='application/json') 
+
+# @app.route('/', methods=["POST"])
+# def index():
+#     if validate(request.json, schema)==False:
+#         logging.error("TypeError in requestfile: ", request.json)
+#         return jsonify({"error": "Wrong data type!"}), 400
+#     if request.method == "POST":
+#         try:
+#             connection = pika.BlockingConnection(
+#                  pika.ConnectionParameters(host='localhost'))
+#             channel = connection.channel()
+#             channel.queue_declare(queue='db_insert')
+#             firstname = request.json["firstname"]
+#             lastname = request.json["lastname"]
+#             data_for_db = firstname+ ' ' + lastname
+#             logging.info(f"Your data is {data_for_db}")
+#             print('Your data is: ', data_for_db)
+#             channel.basic_publish(exchange='', routing_key='db_insert', body=data_for_db)
+#             print(" [x] Sent 'Some data for your db!'", data_for_db)
+#             connection.close()
+#             logging.info("Data has been inserted successfully: ")
+#             return 'You successfully inserted your data! \n'
+#         except Exception as ex:
+#             return ex
+#     return render_template('index.html')
 
 
 if __name__ == '__main__':

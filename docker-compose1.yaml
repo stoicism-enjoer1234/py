@@ -48,9 +48,9 @@ services:
     command: -config.file=/etc/loki/local-config.yaml
     network_mode: "host"
 
-  promtail:
-    image: grafana/promtail
-    command: -config.file=/etc/promtail/promtail.yml
-    volumes:
-      - ./data/promatil-data:/var/lib/docker/volumes/promtail-data/_data
-    network_mode: "host"
+  # promtail:
+  #   image: grafana/promtail
+  #   command: -config.file=/etc/promtail/promtail.yml
+  #   volumes:
+  #     - ./data/promatil-data:/var/lib/docker/volumes/promtail-data/_data
+  #   network_mode: "host"
